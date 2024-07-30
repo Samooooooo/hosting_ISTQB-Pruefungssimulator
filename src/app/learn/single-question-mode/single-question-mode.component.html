@@ -1,0 +1,43 @@
+<div *ngIf="question$ | async as question">
+  <div class="single-question">
+    <div>
+      <h3
+        [innerHTML]="question.index + 1 + '. ' + question.question"
+        style="display: inline-block"
+      ></h3>
+      <ul *ngFor="let options of question.options">
+        <p>{{ options }}</p>
+      </ul>
+      <div>
+        <button (click)="showAnswer(question)">
+          {{
+            question.showAnswer ? "Antwort ausblenden" : "Antwort einblenden"
+          }}
+        </button>
+        <button
+          style="margin-left: 1em; margin-top: 10px"
+          (click)="showNextQuestion(question)"
+        >
+          Nächste Frage
+        </button>
+        <button
+          style="margin-left: 1em; margin-top: 10px"
+          (click)="showPreviosQuestion(question)"
+        >
+          Vorherige Frage
+        </button>
+        <div *ngIf="lastQswitch" style="color: rgb(255, 0, 0)">
+          <h6>{{ lastQError }}</h6>
+        </div>
+        <div style="margin-top: 1em">
+          <span *ngIf="question.showAnswer">
+            <strong>Antwort: </strong>{{ question.correctAnswer }}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br />
+  <br />
+</div>
+<button routerLink="..">List Modus</button>

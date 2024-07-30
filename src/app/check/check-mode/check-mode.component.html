@@ -1,0 +1,79 @@
+<div *ngIf="question$ | async as question">
+  <div class="single-question">
+    <h3
+      [innerHTML]="question.index + 1 + '. ' + question.question"
+      style="display: inline-block"
+    ></h3>
+    <div>
+      <ul *ngFor="let option of question.options">
+        <label>
+          <input
+            type="radio"
+            name="answer"
+            [checked]=""
+            (change)="question.selectedAnswer = option"
+          />
+          <span [innerHTML]="option"></span>
+        </label>
+      </ul>
+    </div>
+    <div style="height: 3em">
+      <button
+        style="margin-left: 1em"
+        (click)="checkAnswerAndNavigate(question)"
+        [disabled]="countDownBo"
+        [disabled]="noOptionSwitch"
+        [disabled]="lastQswitch"
+      >
+        Einreichen
+      </button>
+      <button
+        style="margin-left: 1em; margin-top: 10px"
+        (click)="showPreviosQuestion(question)"
+        [disabled]="countDownBo"
+        [disabled]="noOptionSwitch"
+        [disabled]="lastQswitch"
+      >
+        Vorherige Frage
+      </button>
+      <button
+        style="margin-left: 1em; margin-top: 10px"
+        (click)="skipQuestion(question)"
+        [disabled]="countDownBo"
+        [disabled]="noOptionSwitch"
+        [disabled]="lastQswitch"
+      >
+        Überspringen
+      </button>
+      <div style="display: inline-flexbox">
+        <div *ngIf="lastQswitch" id="lastQText" style="color: rgb(255, 0, 0)">
+          <h6>{{ lastQError }}</h6>
+        </div>
+        <div
+          *ngIf="noOptionSwitch"
+          id="noOptionText"
+          style="color: rgb(253, 1, 1)"
+        >
+          <h5>{{ noOptionError }}</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br />
+  <button routerLink="/">Zurück</button>
+  <button style="margin-left: 1em" routerLink="/scores">Score</button>
+  <div style="margin-top: 1em" *ngIf="countDown > 0">
+    <span style="color: red"
+      >Falsche Antwort. Sie werden zur vorherigen Frage zurückgeleitet.
+      <strong>{{ countDown }}</strong> Sekunden
+      <strong>Richtige Antwort:</strong>
+      <br />
+      <p style="color: rgb(26, 82, 42)">{{ question.correctAnswer }}</p>
+    </span>
+  </div>
+  <h5>
+    <p *ngIf="lastAnswer" style="color: rgb(255, 255, 255)">
+      <strong>Letzte Antwort: </strong>{{ lastAnswer }}
+    </p>
+  </h5>
+</div>

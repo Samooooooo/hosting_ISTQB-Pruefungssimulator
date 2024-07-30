@@ -1,0 +1,85 @@
+<div *ngIf="question$ | async as question">
+  <div class="timer-wrapper">
+    <button
+      *ngIf="timerDuration === 3600"
+      (click)="startTimer()"
+      class="start-button"
+    >
+      Starten
+    </button>
+    <h1 *ngIf="timerDuration < 3600" class="timer-display">
+      {{ timerDisplay }}
+    </h1>
+  </div>
+  <div class="single-question">
+    <h3
+      [innerHTML]="currentQuestionIndex + 1 + '. ' + question.question"
+      style="display: inline-block"
+    ></h3>
+    <div>
+      <ul *ngFor="let option of question.options">
+        <label>
+          <input
+            type="radio"
+            name="answer"
+            [checked]=""
+            (change)="question.selectedAnswer = option"
+          />
+          <span [innerHTML]="option"></span>
+        </label>
+      </ul>
+    </div>
+    <div style="height: 3em">
+      <button
+        style="margin-left: 1em"
+        (click)="checkAnswerAndNavigate(question)"
+        [disabled]="countDownBo"
+        [disabled]="noOptionSwitch"
+        [disabled]="lastQswitch"
+        [disabled]="!timerId"
+      >
+        Einreichen
+      </button>
+      <button
+        style="margin-left: 1em; margin-top: 10px"
+        (click)="showPreviousQuestion(question)"
+        [disabled]="countDownBo"
+        [disabled]="noOptionSwitch"
+        [disabled]="lastQswitch"
+        [disabled]="!timerId"
+      >
+        Vorherige Frage
+      </button>
+      <button
+        style="margin-left: 1em; margin-top: 10px"
+        (click)="skipQuestion(question)"
+        [disabled]="countDownBo"
+        [disabled]="noOptionSwitch"
+        [disabled]="lastQswitch"
+        [disabled]="!timerId"
+      >
+        Überspringen
+      </button>
+      <div style="display: inline-flexbox">
+        <div *ngIf="lastQswitch" style="color: rgb(255, 0, 0)">
+          <h6>{{ lastQError }}</h6>
+        </div>
+        <div *ngIf="noOptionSwitch" style="color: rgb(253, 1, 1)">
+          <h5>{{ noOptionError }}</h5>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br />
+  <div>
+    <button routerLink="/">Zurück</button>
+    <button [disabled]="!timerId" style="margin-left: 1em" routerLink="/scores">
+      Beenden
+    </button>
+  </div>
+  <h5>
+    <p *ngIf="lastAnswer" style="color: rgb(82, 94, 32)">
+      <strong>Letzte Antwort: </strong>{{ lastAnswer }}
+    </p>
+  </h5>
+</div>

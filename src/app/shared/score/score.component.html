@@ -1,0 +1,148 @@
+<div class="score-layout">
+  <div class="score-card">
+    <h2 class="correct-answer">Richtig: {{ scores.rightAnswersCounter }} .</h2>
+    <h2 class="wrong-answer">Falsch: {{ scores.wrongQuestionsCounter }} .</h2>
+    <h2 class="skipped-answer">
+      Übersprungen: {{ scores.skippedQuestionsCounter }} .
+    </h2>
+    <h2 class="rest-answer">
+      Rest:
+      {{
+        questionsInTotal -
+          scores.rightAnswersCounter -
+          scores.wrongQuestionsCounter -
+          scores.skippedQuestionsCounter
+      }}
+      .
+    </h2>
+  </div>
+</div>
+
+<div class="question-section">
+  <div>
+    <h1 class="score-title">
+      Ihre Punktzahl ist
+      <strong class="score-highlight correct-answer">{{
+        (scores.rightAnswersCounter * 100) / questionsInTotal | number: "1.2-2"
+      }}</strong>
+      von insgesamt {{ questionsInTotal }} Fragen
+    </h1>
+    <h1 class="score-title">
+      Ihre Punktzahl ist
+      <strong class="score-highlight correct-answer">{{
+        (scores.rightAnswersCounter * 100) /
+          (scores.rightAnswersCounter + scores.wrongQuestionsCounter)
+          | number: "1.2-2"
+      }}</strong>
+      von den Fragen, die Sie beantwortet haben
+    </h1>
+  </div>
+
+  <div>
+    <h2 class="correct-answer">Richtige Fragen:</h2>
+    <p>
+      Anzahl der <strong class="correct-answer">Richtigen</strong> Antworten:
+      {{ scores.rightAnswersCounter }}
+    </p>
+  </div>
+
+  <div>
+    <h2 class="wrong-answer">Falsche Fragen:</h2>
+    <p>Anzahl der falschen Antworten: {{ scores.wrongQuestionsCounter }}</p>
+    <div *ngIf="scores.wrongQuestions && scores.wrongQuestions.length > 0">
+      <button
+        class="action-button"
+        (click)="showWrongQuestions = !showWrongQuestions"
+      >
+        Falsche Antworten anzeigen/ausblenden
+      </button>
+    </div>
+    <div *ngIf="showWrongQuestions">
+      <p>Ihre <strong class="wrong-answer">falschen</strong> Antworten:</p>
+      <ul class="question-list">
+        <li
+          *ngFor="let wrongQuestion of scores.wrongQuestions"
+          class="question-item"
+        >
+          <h3 [innerHTML]="wrongQuestion.question"></h3>
+          <ul class="option-list">
+            <li
+              *ngFor="let option of wrongQuestion.options"
+              class="option-item"
+            >
+              <p [innerHTML]="option"></p>
+            </li>
+          </ul>
+          <p *ngIf="wrongQuestion.selectedAnswer">
+            <strong>Ihre Antwort:</strong>
+            <strong class="wrong-answer">{{
+              wrongQuestion.selectedAnswer
+            }}</strong>
+          </p>
+          <p>
+            <strong>Richtige Antwort: </strong
+            ><strong class="correct-answer">{{
+              wrongQuestion.correctAnswer
+            }}</strong>
+          </p>
+          <br />
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div>
+    <h2 class="skipped-answer">Übersprungene Fragen:</h2>
+    <p>
+      Anzahl der
+      <strong class="skipped-answer">Übersprungenen</strong> Antworten:
+      {{ scores.skippedQuestionsCounter }}
+    </p>
+    <div *ngIf="scores.skippedQuestions && scores.skippedQuestions.length > 0">
+      <button
+        class="action-button"
+        (click)="showSkippedQuestions = !showSkippedQuestions"
+      >
+        Übersprungene Fragen anzeigen/ausblenden
+      </button>
+      <div *ngIf="showSkippedQuestions">
+        <ul class="question-list">
+          <li
+            *ngFor="let skippedQuestion of scores.skippedQuestions"
+            class="question-item"
+          >
+            <h3 [innerHTML]="skippedQuestion.question"></h3>
+            <ul class="option-list">
+              <li
+                *ngFor="let option of skippedQuestion.options"
+                class="option-item"
+              >
+                <p [innerHTML]="option"></p>
+              </li>
+            </ul>
+            <p>
+              <strong>Richtige Antwort: </strong
+              ><strong class="correct-answer">{{
+                skippedQuestion.correctAnswer
+              }}</strong>
+            </p>
+            <br />
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <h2 class="rest-answer">Restliche Fragen:</h2>
+    <p>
+      Anzahl der <strong class="rest-answer">Restlichen</strong> Antworten:
+      {{
+        questionsInTotal -
+          scores.rightAnswersCounter -
+          scores.skippedQuestionsCounter -
+          scores.wrongQuestionsCounter
+      }}
+    </p>
+  </div>
+</div>

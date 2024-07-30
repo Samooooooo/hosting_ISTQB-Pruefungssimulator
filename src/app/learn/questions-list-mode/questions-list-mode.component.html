@@ -1,0 +1,36 @@
+<div class="scroll-container">
+  <ul *ngIf="questions$ | async as questions">
+    <ul *ngFor="let question of questions; let i = index">
+      <a *ngIf="question" [routerLink]="question.index">
+        <div class="single-question-list">
+          <div>
+            <h3
+              [innerHTML]="question.index + 1 + '. ' + question.question"
+              style="display: inline-block"
+            ></h3>
+          </div>
+          <ul>
+            <ul *ngFor="let option of question.options">
+              <p>{{ option }}</p>
+            </ul>
+          </ul>
+        </div>
+      </a>
+      <div>
+        <div>
+          <span *ngIf="question.showAnswer" style="">
+            <strong>Antwort: </strong>{{ question.correctAnswer }}
+          </span>
+        </div>
+        <button (click)="showAnswer(question)">
+          {{
+            question.showAnswer ? "Antwort ausblenden" : "Antwort einblenden"
+          }}
+        </button>
+      </div>
+    </ul>
+  </ul>
+</div>
+<br />
+<button routerLink="..">Zurück</button>
+<button style="margin-left: 1em" routerLink="/learn/0">Enzelfrage Modus</button>
