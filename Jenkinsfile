@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_IMAGE = 'osama0thabit/angular-app:latest'
+        DOCKER_IMAGE = 'your-docker-username/angular-app:latest'
     }
 
     stages {
@@ -15,10 +15,16 @@ pipeline {
             steps {
                 script {
                     docker.image('node:20').inside {
-                        sh 'mkdir -p $(pwd)/.npm'
-                        sh 'npm config set cache $(pwd)/.npm'
-                        sh 'npm config set prefix $(pwd)/.npm-global'
-                        sh 'npm install --cache $(pwd)/.npm --no-save'
+                        // Create local .npm directory
+                        sh 'mkdir -p .npm'
+
+                        // Set local .npm cache directory
+                        sh 'npm config set cache .npm --global'
+
+                        // Install dependencies
+                        sh 'npm install --cache .npm'
+
+                        // Build the project
                         sh 'npm run build --prod'
                     }
                 }
