@@ -14,6 +14,9 @@ FROM nginx:alpine
 
 COPY --from=build /app/dist/hosting_ISTQB-Pruefungssimulator/browser /usr/share/nginx/html
 
+# Add a custom Nginx configuration file
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
 EXPOSE 80
 
 CMD ["nginx", "-g", "daemon off;"]
