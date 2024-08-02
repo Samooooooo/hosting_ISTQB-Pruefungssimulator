@@ -15,12 +15,8 @@ pipeline {
             steps {
                 script {
                     docker.image('node:20').inside {
-                        // Ensure .npm directory exists and has correct permissions
-                        sh 'mkdir -p .npm'
-                        sh 'chmod -R 777 .npm'
-
-                        // Use local .npm cache directory
-                        sh 'npm config set cache $(pwd)/.npm --global'
+                        // Set npm cache directory to local workspace
+                        sh 'npm config set cache .npm --location=project'
 
                         // Install dependencies
                         sh 'npm install'
@@ -52,7 +48,4 @@ pipeline {
                 script {
                     docker.image("${DOCKER_IMAGE}").run('-p 80:80')
                 }
-            }
-        }
-    }
-}
+
