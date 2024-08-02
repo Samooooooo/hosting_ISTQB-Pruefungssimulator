@@ -22,11 +22,9 @@ pipeline {
             steps {
                 script {
                     docker.image('node:20').inside {
-                        // Ensure all npm-related directories have the correct permissions
-                        sh 'sudo chown -R 110:114 /var/lib/jenkins/workspace/istqb-pipeline'
-                        sh 'sudo chown -R 110:114 /.npm'
-                        // Clean node_modules before installation
+                        // Ensure node_modules and npm cache directories are cleaned and have correct permissions
                         sh 'rm -rf node_modules'
+                        sh 'rm -rf ~/.npm'
                         sh 'npm install'
                         sh 'npm run build --prod'
                     }
