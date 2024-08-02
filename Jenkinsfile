@@ -6,13 +6,6 @@ pipeline {
     }
 
     stages {
-        stage('Clean Workspace') {
-            steps {
-                script {
-                    deleteDir()
-                }
-            }
-        }
         stage('Checkout') {
             steps {
                 checkout scm
@@ -22,11 +15,10 @@ pipeline {
             steps {
                 script {
                     docker.image('node:20').inside {
-                        // Ensure node_modules and npm cache directories are cleaned and have correct permissions
-                        sh 'rm -rf node_modules'
-                        sh 'npm cache clean --force'
-                        sh 'npm install --loglevel=verbose'
-                        sh 'npm run build --prod --loglevel=verbose'
+                        // Configure npm to use the writable directory
+                        sh 'npm config set cache /var/lib/jenkins/.npm --global'
+                        sh 'npm install'
+                        sh 'npm run build --prod'
                     }
                 }
             }
