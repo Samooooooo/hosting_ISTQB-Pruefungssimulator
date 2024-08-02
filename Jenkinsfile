@@ -3,7 +3,6 @@ pipeline {
 
     environment {
         DOCKER_IMAGE = 'osama0thabit/angular-app:latest'
-        NPM_CACHE_DIR = '/var/lib/jenkins/.npm'
     }
 
     stages {
@@ -16,8 +15,7 @@ pipeline {
             steps {
                 script {
                     docker.image('node:20').inside {
-                        sh 'mkdir -p ${NPM_CACHE_DIR}'
-                        sh 'npm config set cache ${NPM_CACHE_DIR} --global'
+                        sh 'npm config set cache $(pwd)/.npm --global'
                         sh 'npm install'
                         sh 'npm run build --prod'
                     }
