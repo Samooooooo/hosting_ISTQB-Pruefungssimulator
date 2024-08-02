@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_IMAGE = 'osama.thabit1@gmail.com/angular-app:latest'
+        DOCKER_IMAGE = 'osama_thabit/angular-app:latest'
     }
 
     stages {
