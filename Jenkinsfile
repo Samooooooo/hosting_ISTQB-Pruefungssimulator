@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_IMAGE = 'osama0thabit/angular-app:latest'
+        DOCKER_IMAGE = 'your-docker-username/angular-app:latest'
     }
 
     stages {
@@ -48,4 +48,7 @@ pipeline {
                 script {
                     docker.image("${DOCKER_IMAGE}").run('-p 80:80')
                 }
-
+            }
+        }
+    }
+}
