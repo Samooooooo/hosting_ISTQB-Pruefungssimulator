@@ -15,7 +15,6 @@ pipeline {
             steps {
                 script {
                     docker.image('node:20').inside {
-                        // Configure npm to use the writable directory
                         sh 'npm config set cache /var/lib/jenkins/.npm --global'
                         sh 'npm install'
                         sh 'npm run build --prod'
