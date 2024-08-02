@@ -12,7 +12,7 @@ RUN npm run build -- --project hosting_ISTQB-Pruefungssimulator --configuration 
 # Stage 2: Serve the app with Nginx
 FROM nginx:alpine
 
-COPY --from=build /app/dist/hosting_ISTQB-Pruefungssimulator /usr/share/nginx/html
+COPY --from=build /app/dist/hosting_ISTQB-Pruefungssimulator/browser /usr/share/nginx/html
 
 EXPOSE 80
 

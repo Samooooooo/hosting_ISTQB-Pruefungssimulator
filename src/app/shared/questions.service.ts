@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
   providedIn: 'root',
 })
 export class QuestionsService {
-  private apiUrl = '/ISTQB_v3,1.json';
+  private apiUrl = 'assets/ISTQB_v3,1.json';
 
   questions: Question[] = [];
   questionsLength = 0;
