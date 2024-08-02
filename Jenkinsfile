@@ -9,7 +9,6 @@ pipeline {
         stage('Clean Workspace') {
             steps {
                 script {
-                    // Clean up the workspace directory
                     deleteDir()
                 }
             }
@@ -23,7 +22,10 @@ pipeline {
             steps {
                 script {
                     docker.image('node:20').inside {
-                        // Ensure node_modules is cleaned up before installing
+                        // Ensure all npm-related directories have the correct permissions
+                        sh 'sudo chown -R 110:114 /var/lib/jenkins/workspace/istqb-pipeline'
+                        sh 'sudo chown -R 110:114 /.npm'
+                        // Clean node_modules before installation
                         sh 'rm -rf node_modules'
                         sh 'npm install'
                         sh 'npm run build --prod'
