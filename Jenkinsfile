@@ -35,11 +35,7 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                script {
-                    sh 'docker stop $(docker ps -aq) || true'
-                    sh 'docker rm $(docker ps -aq) || true'
-                    sh 'docker run -d -p 80:80 osama0thabit/angular-app:latest'
-                }
+                sh 'docker run -d -p 8081:80 osama0thabit/angular-app:latest'
             }
         }
     }
