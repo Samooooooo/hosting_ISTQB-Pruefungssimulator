@@ -15,7 +15,7 @@ pipeline {
             steps {
                 script {
                     docker.image('node:20').inside {
-                        sh 'npm config set cache $(pwd)/.npm --global'
+                        sh 'npm config set cache $(pwd)/.npm'
                         sh 'npm install'
                         sh 'npm run build --prod'
                     }
