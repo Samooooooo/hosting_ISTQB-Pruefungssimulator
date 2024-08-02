@@ -15,13 +15,8 @@ pipeline {
             steps {
                 script {
                     docker.image('node:20').inside {
-                        // Set npm cache directory to local workspace
                         sh 'npm config set cache .npm --location=project'
-
-                        // Install dependencies
                         sh 'npm install'
-
-                        // Build the project
                         sh 'npm run build --prod'
                     }
                 }
@@ -46,7 +41,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    docker.image("${DOCKER_IMAGE}").run('-p 80:80')
+                    docker.image("${DOCKER_IMAGE}").run('-d -p 8080:80')
                 }
             }
         }
