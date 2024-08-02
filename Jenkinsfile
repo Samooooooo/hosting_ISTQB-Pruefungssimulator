@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_IMAGE = 'your-docker-username/angular-app:latest'
+        DOCKER_IMAGE = 'osama0thabit/angular-app:latest'
     }
 
     stages {
