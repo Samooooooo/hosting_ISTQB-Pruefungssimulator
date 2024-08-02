@@ -6,11 +6,6 @@ pipeline {
     }
 
     stages {
-        stage('Checkout') {
-            steps {
-                checkout scm
-            }
-        }
         stage('Clean Workspace') {
             steps {
                 script {
@@ -19,11 +14,16 @@ pipeline {
                 }
             }
         }
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
         stage('Build') {
             steps {
                 script {
                     docker.image('node:20').inside {
-                        // Clean up node_modules before installing
+                        // Ensure node_modules is cleaned up before installing
                         sh 'rm -rf node_modules'
                         sh 'npm install'
                         sh 'npm run build --prod'
