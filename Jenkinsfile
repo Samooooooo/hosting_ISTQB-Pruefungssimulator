@@ -24,9 +24,9 @@ pipeline {
                     docker.image('node:20').inside {
                         // Ensure node_modules and npm cache directories are cleaned and have correct permissions
                         sh 'rm -rf node_modules'
-                        sh 'rm -rf ~/.npm'
-                        sh 'npm install'
-                        sh 'npm run build --prod'
+                        sh 'npm cache clean --force'
+                        sh 'npm install --loglevel=verbose'
+                        sh 'npm run build --prod --loglevel=verbose'
                     }
                 }
             }
