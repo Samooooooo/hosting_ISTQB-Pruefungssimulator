@@ -14,11 +14,11 @@ RUN npm install
 COPY . .
 
 # Build the Angular application
-RUN npm run build --configuration production
+RUN npm run build
 
 # Use an Nginx image to serve the built Angular app
 FROM nginx:alpine
-COPY --from=0 /app/dist/your-angular-app /usr/share/nginx/html
+COPY --from=0 /app/dist/hosting_ISTQB-Pruefungssimulator /usr/share/nginx/html
 
 # Expose port 80
 EXPOSE 80
