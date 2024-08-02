@@ -15,6 +15,8 @@ pipeline {
             steps {
                 script {
                     docker.image('node:20').inside {
+                        // Clean up node_modules before installing
+                        sh 'rm -rf node_modules'
                         sh 'npm install'
                         sh 'npm run build --prod'
                     }
