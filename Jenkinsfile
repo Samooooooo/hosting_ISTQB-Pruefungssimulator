@@ -11,6 +11,14 @@ pipeline {
                 checkout scm
             }
         }
+        stage('Clean Workspace') {
+            steps {
+                script {
+                    // Clean up the workspace directory
+                    deleteDir()
+                }
+            }
+        }
         stage('Build') {
             steps {
                 script {
